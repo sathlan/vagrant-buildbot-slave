@@ -2,10 +2,10 @@
 Vagrant Box able to start vagrant box.
 
 ** Rational
-The issue I was facing was that I need to have a "hardware node" that
-would be always the same to start my Vagrant Boxes.  But, sometime,
-the kernel needs to be updated, conf change, so the base box launcher
-would sometime break.  
+The issue I face is that I need to have a "hardware node" that would
+be always the same to start my Vagrant Boxes.  But, sometime, the
+kernel needs to be updated, conf change, so the base box launcher
+would sometime break, especially with complicated bridged network.
 
 So I decided to have a basebox that would insulate me from the
 hardware node change.
@@ -13,4 +13,8 @@ hardware node change.
 ** Limitations
 You lose part of hardware vitalization.  Things are slower, but don't
 break randomly.
+
+** Requirements
+The basebox is based on a personal [[https://github.com/jedi4ever/veewee-old][veewee-old]] definition, that can be
+found [[git://github.com/sathlan/veewee-definitions.git][there]].
 
