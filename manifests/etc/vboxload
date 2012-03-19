@@ -1,0 +1,44 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          vboxload
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Load and unload vbox drivers.
+# Description:       To be able to run VBox inside VBox drivers must be unloaded
+#                    which require shares to be umounted.
+### END INIT INFO
+
+# Author: Me
+#
+
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="Load and unload vbox drivers."
+NAME=vboxload
+SCRIPTNAME=/etc/init.d/$NAME
+
+do_start()
+{
+    /etc/init.d/vboxadd start
+    mkdir -p /vagrant
+    mount -t vboxsf v-root /vagrant
+    mkdir -p /tmp/vagrant-puppet/manifests
+    mount -t vboxsf manifests /tmp/vagrant-puppet/manifests
+}
+
+do_stop()
+{
+    umount -a -t vboxsf
+    /etc/init.d/vboxadd stop
+}
+
+case "$1" in
+  start)
+        do_start;;
+  stop)
+        do_stop;;
+  *)
+        echo 1>&1 "Unknown command";exit 1;;
+esac
+
